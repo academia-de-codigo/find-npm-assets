@@ -1,0 +1,13 @@
+{
+    "name": "find-npm-asset-test",
+    "version": "0.0.0",
+    "private": true,
+    "dependencies": {
+        "foo": "*",
+        "bar": "*"
+    },
+    "assets": [
+        "logo.png",
+        "background.jpg"
+    ]
+}
