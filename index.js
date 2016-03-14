@@ -13,10 +13,17 @@ processPkg('.');
 
 function processPkg(curDir) {
 
-    var meta = require(path.join(curDir, PACKAGE_INFO));
-    grabAssets(curDir, meta.assets);
+    var meta;
+    var metaPath = './' + path.join(curDir, PACKAGE_INFO);
 
-    if (!meta.dependencies) {
+    try {
+        meta = require(metaPath);
+        grabAssets(curDir, meta.assets);
+    } catch (err) {
+        console.warn('Unable to find file ' + metaPath + ', skipping..');
+    }
+
+    if (!meta || !meta.dependencies) {
         return;
     }
 
