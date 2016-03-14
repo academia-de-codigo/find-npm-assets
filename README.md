@@ -33,7 +33,7 @@ Let's say you have a package name `my-site`, which contains some assets and npm 
 You could retreive all your project assets with:
 
 ```js
-var assets = require('find-npm-assets');
+var assets = require('find-npm-assets').load();
 
 // Example output:
 // ["src/app/assets/**/*", "logo.png", "background.jpg"]
@@ -45,7 +45,7 @@ var assets = require('find-npm-assets');
 Integrating find-npm-assets with gulp is extremely easy. The following gulp task copies all your project assets to a destination folder:
  
 ```js
-var assets = require('find-npm-assets');
+var assets = require('find-npm-assets').load();
 
 gulp.task('assets', function() {
     gulp.src(assets)
@@ -53,6 +53,18 @@ gulp.task('assets', function() {
 });
 
 ```
+
+## Reference
+
+To output debug information, pass an object with a `debug` property set to true to the `load` method:
+
+```js
+var assetFind = require('find-npm-assets');
+assetFind.load({debug: true});
+```
+
+You can run `find-npm-assets` from the command line, the `-v` argument will trigger debug information.
+
 
 ## License
 See LICENSE file.

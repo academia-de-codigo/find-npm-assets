@@ -19,14 +19,8 @@
   "sub": true,
   "debug": true,
   "globals": {
-    "Phaser": false,
-    "Interpreter": true,
-    "NativeHelper": true,
-    "require": true,
-    "module": true,
-    "exports": true,
-    "goog": true,
-    "Blockly": true,
-    "$": true
+      "require": true,
+      "module": true,
+      "process": true
   }
 }
