@@ -12,12 +12,16 @@ module.exports = {
     load: load
 };
 
-if(require.main === module) {
+if (require.main === module) {
     if (process.argv[2] === '-v') {
         verbose = true;
     }
 
     load();
+}
+
+if (verbose) {
+    console.info('ASSETS: ' + assets);
 }
 
 function load(config) {
@@ -32,11 +36,6 @@ function load(config) {
     return assets;
 }
 
-
-if (verbose) {
-    console.info('ASSETS: ' + assets);
-}
-
 function processPkg(curDir) {
 
     var meta;
@@ -49,7 +48,9 @@ function processPkg(curDir) {
         meta = require(metaPath);
         grabAssets(curDir, meta.assets);
     } catch (err) {
-        console.warn('Unable to find file ' + metaPath + ', skipping..');
+        if (verbose) {
+            console.warn('Unable to find file ' + metaPath + ', skipping..');
+        }
     }
 
     if (!meta || !meta.dependencies) {
