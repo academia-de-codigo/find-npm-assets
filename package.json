@@ -1,6 +1,6 @@
 {
   "name": "find-npm-assets",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Recursively find assets in node modules",
   "main": "index.js",
   "repository": {
