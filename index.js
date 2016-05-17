@@ -1,10 +1,13 @@
 /*jshint -W097 */
 'use strict';
 
+var LOG_ID = 'find-npm-assets';
 var NODE_MODULES_DIR = 'node_modules';
 var PACKAGE_INFO = 'package.json';
 
 var path = require('path');
+var gutil = require('gulp-util');
+
 var verbose = false;
 var assets = [];
 
@@ -21,7 +24,7 @@ if (require.main === module) {
 }
 
 if (verbose) {
-    console.info('ASSETS: ' + assets);
+    gutil.log(LOG_ID, gutil.colors.green('assets'), assets);
 }
 
 function load(config) {
@@ -43,13 +46,13 @@ function processPkg(curDir) {
 
     try {
         if (verbose) {
-            console.info('Reading: ' + metaPath);
+            gutil.log(LOG_ID, gutil.colors.blue('reading', metaPath));
         }
         meta = require(metaPath);
         grabAssets(curDir, meta.assets);
     } catch (err) {
         if (verbose) {
-            console.warn('Unable to find file ' + metaPath + ', skipping..');
+            gutil.log(LOG_ID, gutil.colors.yellow('not found', metaPath, 'skipping...'));
         }
     }
 
@@ -71,7 +74,7 @@ function grabAssets(basePath, pkgAssets) {
     }
 
     if (verbose) {
-        console.info('Found: ' + pkgAssets);
+        gutil.log(LOG_ID, gutil.colors.green('found', pkgAssets));
     }
 
     if (Array.isArray(pkgAssets)) {

@@ -8,7 +8,7 @@ To define assets in a package, add an `assets` field to the `package.json` conta
 
 ## Example
 
-Let's say you have a package name `my-site`, which contains some assets and npm dependencies that in turn contain additional assets:
+Let's say you have a package named `my-site`, which contains some assets and npm dependencies that in turn contain additional assets:
 
 ```json
 {
