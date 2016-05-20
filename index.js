@@ -70,6 +70,7 @@ function processPkg(curDir) {
 function grabAssets(basePath, pkgAssets) {
 
     if (!pkgAssets || !basePath) {
+        gutil.log(LOG_ID, gutil.colors.yellow('no assets found in ', basePath));
         return;
     }
 
