@@ -49,7 +49,7 @@ function processPkg(curDir) {
             gutil.log(LOG_ID, gutil.colors.blue('reading', metaPath));
         }
         meta = require(metaPath);
-        grabAssets(curDir, meta.assets);
+        grabAssets(meta.name, curDir, meta.assets);
     } catch (err) {
         if (verbose) {
             gutil.log(LOG_ID, gutil.colors.yellow('not found', metaPath, 'skipping...'));
@@ -67,15 +67,19 @@ function processPkg(curDir) {
 
 }
 
-function grabAssets(basePath, pkgAssets) {
+function grabAssets(pkgName, basePath, pkgAssets) {
 
     if (!pkgAssets || !basePath) {
-        gutil.log(LOG_ID, gutil.colors.yellow('no assets found in ', basePath));
+        if (verbose) {
+            gutil.log(LOG_ID, gutil.colors.yellow('no assets found in ', basePath));
+        } else {
+            gutil.log(LOG_ID, gutil.colors.yellow('no assets found in ', pkgName));
+        }
         return;
     }
 
     if (verbose) {
-        gutil.log(LOG_ID, gutil.colors.green('found', pkgAssets));
+        gutil.log(LOG_ID, gutil.colors.green('found assets in ', pkgName, pkgAssets));
     }
 
     if (Array.isArray(pkgAssets)) {
