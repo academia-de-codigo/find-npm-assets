@@ -9,6 +9,7 @@ var path = require('path');
 var gutil = require('gulp-util');
 
 var verbose = false;
+var dependencies = false;
 var assets = [];
 
 module.exports = {
@@ -31,6 +32,10 @@ function load(config) {
 
     if (config && config.debug) {
         verbose = true;
+    }
+
+    if (config.dependencies) {
+        dependencies = true;
     }
 
     var cwd = process.cwd();
@@ -56,7 +61,7 @@ function processPkg(curDir) {
         }
     }
 
-    if (!meta || !meta.dependencies) {
+    if (!meta || !meta.dependencies || !meta.assets) {
         return;
     }
 
@@ -82,7 +87,14 @@ function grabAssets(pkgName, basePath, pkgAssets) {
         gutil.log(LOG_ID, gutil.colors.green('found assets in ', pkgName, pkgAssets));
     }
 
-    if (Array.isArray(pkgAssets)) {
+    if (dependencies) {
+
+        assets.push({
+            name: pkgName,
+            assets: pkgAssets
+        });
+
+    } else if (Array.isArray(pkgAssets)) {
         pkgAssets.forEach(assetPush);
     } else {
         assetPush(pkgAssets);
