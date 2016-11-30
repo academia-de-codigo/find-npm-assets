@@ -78,8 +78,10 @@ function grabAssets(pkgName, basePath, pkgAssets) {
         return;
     }
 
-    gutil.log(LOG_ID, gutil.colors.green('found assets in package:', pkgName,
-    '\nassets:', pkgAssets));
+    if (verbose) {
+        gutil.log(LOG_ID, gutil.colors.green('found assets in package:', pkgName,
+        '\nassets:', pkgAssets));
+    }
 
     if (dependencies) {
 
