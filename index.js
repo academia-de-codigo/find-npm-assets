@@ -61,7 +61,7 @@ function processPkg(curDir) {
         }
     }
 
-    if (!meta || !meta.dependencies || !meta.assets) {
+    if (!meta || !meta.dependencies) {
         return;
     }
 
@@ -75,17 +75,11 @@ function processPkg(curDir) {
 function grabAssets(pkgName, basePath, pkgAssets) {
 
     if (!pkgAssets || !basePath) {
-        if (verbose) {
-            gutil.log(LOG_ID, gutil.colors.yellow('no assets found in ', basePath));
-        } else {
-            gutil.log(LOG_ID, gutil.colors.yellow('no assets found in ', pkgName));
-        }
         return;
     }
 
-    if (verbose) {
-        gutil.log(LOG_ID, gutil.colors.green('found assets in ', pkgName, pkgAssets));
-    }
+    gutil.log(LOG_ID, gutil.colors.green('found assets in package:', pkgName,
+    '\nassets:', pkgAssets));
 
     if (dependencies) {
 
