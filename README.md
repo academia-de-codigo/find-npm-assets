@@ -61,7 +61,7 @@ var assets = require('find-npm-assets').load({verticalDirStructure: true});
 
 gulp.task('assets', function() {
     assets.forEach(function(pkg){
-        gulp.src(pkg.asset).pipe(gulp.dest('build/assets/' + pkg.name));
+        gulp.src(pkg.assets).pipe(gulp.dest('build/assets/' + pkg.name));
     });
 })
 
