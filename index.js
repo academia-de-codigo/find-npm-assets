@@ -17,13 +17,17 @@ module.exports = {
 };
 
 if (require.main === module) {
-    if (process.argv[2] === '-v') {
-        verbose = true;
-    }
 
-    if (process.argv[3] === '-m') {
-        verticalDirStructure = true;
-    }
+    process.argv.forEach(function(arg) {
+
+        if (arg === '-v') {
+            verbose = true;
+        }
+
+        if (arg === '-m') {
+            verticalDirStructure = true;
+        }
+    });
 
     load();
 }
@@ -96,7 +100,9 @@ function grabAssets(pkgName, basePath, pkgAssets) {
         assetPush(pkgAssets);
     }
 
-    assets.push(pkgObject);
+    if (verticalDirStructure) {
+        assets.push(pkgObject);
+    }
 
     function assetPush(asset) {
 
