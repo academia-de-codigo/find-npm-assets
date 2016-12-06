@@ -32,9 +32,7 @@ if (require.main === module) {
     load();
 }
 
-if (verbose) {
-    gutil.log(LOG_ID, gutil.colors.green('assets'), assets);
-}
+
 
 function load(config) {
 
@@ -48,6 +46,10 @@ function load(config) {
 
     var cwd = process.cwd();
     processPkg(cwd);
+
+    if (verbose) {
+        gutil.log(LOG_ID, gutil.colors.green('assets'), assets);
+    }
 
     return assets;
 
