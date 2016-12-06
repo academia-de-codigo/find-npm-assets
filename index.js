@@ -95,7 +95,7 @@ function grabAssets(pkgName, basePath, pkgAssets) {
     }
 
     var pkgObject = {
-        pkg: pkgName,
+        name: pkgName,
         assets: []
     };
 
@@ -127,6 +127,6 @@ function grabAssets(pkgName, basePath, pkgAssets) {
     }
 
     function isDuplicate(item) {
-        return item.pkg === pkgName;
+        return item.name === pkgName;
     }
 }
