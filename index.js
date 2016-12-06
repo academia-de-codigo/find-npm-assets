@@ -49,6 +49,8 @@ function load(config) {
     var cwd = process.cwd();
     processPkg(cwd);
 
+    return assets;
+
 }
 
 function processPkg(curDir) {
