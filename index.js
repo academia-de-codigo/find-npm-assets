@@ -49,7 +49,6 @@ function load(config) {
     var cwd = process.cwd();
     processPkg(cwd);
 
-    return assets;
 }
 
 function processPkg(curDir) {
@@ -58,12 +57,16 @@ function processPkg(curDir) {
     var metaPath = path.join(curDir, PACKAGE_INFO);
 
     try {
+
         if (verbose) {
             gutil.log(LOG_ID, gutil.colors.blue('reading', metaPath));
         }
+
         meta = require(metaPath);
         grabAssets(meta.name, curDir, meta.assets);
+
     } catch (err) {
+
         if (verbose) {
             gutil.log(LOG_ID, gutil.colors.yellow('not found', metaPath, 'skipping...'));
         }
@@ -92,12 +95,9 @@ function grabAssets(pkgName, basePath, pkgAssets) {
     }
 
     var pkgObject = {
-        name: pkgName,
+        pkg: pkgName,
         assets: []
     };
-
-    gutil.log(LOG_ID, gutil.colors.green('found assets in', pkgName,
-        ':', pkgAssets));
 
     if (Array.isArray(pkgAssets)) {
         pkgAssets.forEach(assetPush);
@@ -105,17 +105,28 @@ function grabAssets(pkgName, basePath, pkgAssets) {
         assetPush(pkgAssets);
     }
 
-    if (pkgDir) {
+    if (pkgDir && !assets.find(isDuplicate)) {
+
+        gutil.log(LOG_ID, gutil.colors.green('found assets in', pkgName, ':', pkgAssets));
         assets.push(pkgObject);
+
     }
 
     function assetPush(asset) {
 
         if (pkgDir) {
-            pkgObject.assets.push(path.join(basePath, asset));
-        } else {
-            assets.push(path.join(basePath, asset));
-        }
 
+            pkgObject.assets.push(path.join(basePath, asset));
+
+        } else {
+
+            gutil.log(LOG_ID, gutil.colors.green('found assets in', pkgName, ':', pkgAssets));
+            assets.push(path.join(basePath, asset));
+
+        }
+    }
+
+    function isDuplicate(item) {
+        return item.pkg === pkgName;
     }
 }
