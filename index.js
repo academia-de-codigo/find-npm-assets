@@ -9,7 +9,7 @@ var path = require('path');
 var gutil = require('gulp-util');
 
 var verbose = false;
-var verticalDirStructure = false;
+var pkgDir = false;
 var assets = [];
 
 module.exports = {
@@ -25,7 +25,7 @@ if (require.main === module) {
         }
 
         if (arg === '-m') {
-            verticalDirStructure = true;
+            pkgDir = true;
         }
     });
 
@@ -42,8 +42,8 @@ function load(config) {
         verbose = true;
     }
 
-    if (config && config.verticalDirStructure) {
-        verticalDirStructure = true;
+    if (config && config.pkgDir) {
+        pkgDir = true;
     }
 
     var cwd = process.cwd();
@@ -83,6 +83,11 @@ function processPkg(curDir) {
 function grabAssets(pkgName, basePath, pkgAssets) {
 
     if (!pkgAssets || !basePath) {
+
+        if (verbose) {
+            gutil.log(LOG_ID, gutil.colors.yellow('no assets found in ', basePath));
+        }
+
         return;
     }
 
@@ -91,8 +96,8 @@ function grabAssets(pkgName, basePath, pkgAssets) {
         assets: []
     };
 
-    gutil.log(LOG_ID, gutil.colors.green('found assets in package:', pkgName,
-        '\nassets:', pkgAssets));
+    gutil.log(LOG_ID, gutil.colors.green('found assets in', pkgName,
+        ':', pkgAssets));
 
     if (Array.isArray(pkgAssets)) {
         pkgAssets.forEach(assetPush);
@@ -100,13 +105,13 @@ function grabAssets(pkgName, basePath, pkgAssets) {
         assetPush(pkgAssets);
     }
 
-    if (verticalDirStructure) {
+    if (pkgDir) {
         assets.push(pkgObject);
     }
 
     function assetPush(asset) {
 
-        if (verticalDirStructure) {
+        if (pkgDir) {
             pkgObject.assets.push(path.join(basePath, asset));
         } else {
             assets.push(path.join(basePath, asset));

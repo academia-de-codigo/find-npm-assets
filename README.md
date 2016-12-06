@@ -54,10 +54,10 @@ gulp.task('assets', function() {
 
 ```
 
-For projects with assets coming from multiple packages it is recommended to use the `verticalDirStructure` switch, which organizes assets by project name:
+For projects with assets coming from multiple packages it is recommended to set the `pkgDir` property, which allows assets to be organized by project name:
 
 ```js
-var assets = require('find-npm-assets').load({verticalDirStructure: true});
+var assets = require('find-npm-assets').load({pkgDir: true});
 
 gulp.task('assets', function() {
     assets.forEach(function(pkg){
@@ -66,10 +66,14 @@ gulp.task('assets', function() {
 })
 
 // Example output:
-// {
-// name: projectName
-// assets: ["src/app/assets/**/*", "logo.png", "background.jpg"]
-// }
+// [{
+//  name: project1,
+//  assets: ["src/app/assets/**/*", "logo.png", "background.jpg"]
+// }, {
+//  name: project2,
+//  assets: ["src/app/assets/**/*", "logo.png", "background.jpg"]
+// }]
+
 ```
 
 ## Reference
@@ -81,7 +85,7 @@ var assetFind = require('find-npm-assets');
 assetFind.load({debug: true});
 ```
 
-You can run `find-npm-assets` from the command line, the `-v` argument will trigger debug information and `-m` will trigger the `verticalDirStructure` option.
+You can run `find-npm-assets` from the command line, the `-v` argument will trigger debug information and `-m` will trigger the `pkgDir` option.
 
 
 ## License
