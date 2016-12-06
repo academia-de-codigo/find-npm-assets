@@ -30,7 +30,7 @@ Let's say you have a package named `my-site`, which contains some assets and npm
 }
 ```
 
-You could retreive all your project assets with:
+You could retrieve all your project assets with:
 
 ```js
 var assets = require('find-npm-assets').load();
@@ -43,7 +43,7 @@ var assets = require('find-npm-assets').load();
 ## Gulp usage
 
 Integrating find-npm-assets with gulp is extremely easy. The following gulp task copies all your project assets to a destination folder:
- 
+
 ```js
 var assets = require('find-npm-assets').load();
 
@@ -51,6 +51,28 @@ gulp.task('assets', function() {
     gulp.src(assets)
         .pipe(gulp.dest('build/assets'))
 });
+
+```
+
+For projects with assets coming from multiple packages it is recommended to set the `pkgDir` property, which allows assets to be organized by project name:
+
+```js
+var assets = require('find-npm-assets').load({pkgDir: true});
+
+gulp.task('assets', function() {
+    assets.forEach(function(pkg){
+        gulp.src(pkg.assets).pipe(gulp.dest('build/assets/' + pkg.name));
+    });
+})
+
+// Example output:
+// [{
+//  name: project1,
+//  assets: ["src/app/assets/**/*", "logo.png", "background.jpg"]
+// }, {
+//  name: project2,
+//  assets: ["src/app/assets/**/*", "logo.png", "background.jpg"]
+// }]
 
 ```
 
@@ -63,7 +85,7 @@ var assetFind = require('find-npm-assets');
 assetFind.load({debug: true});
 ```
 
-You can run `find-npm-assets` from the command line, the `-v` argument will trigger debug information.
+You can run `find-npm-assets` from the command line, the `-v` argument will trigger debug information and `-m` will trigger the `pkgDir` option.
 
 
 ## License
